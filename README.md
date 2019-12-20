@@ -31,7 +31,8 @@ The goals of the Advanced Lane Finding project are as follows:
 
 
 
-## [Rubric Points](https://review.udacity.com/#!/rubrics/571/view)
+## Rubric Points
+[//]: # (## [Rubric Points](https://review.udacity.com/#!/rubrics/571/view))
 
 #### The rubric points of the Advanced Lane Finding project were considered individually.  Each point of the rubric is addressed in this implementation.  The original project rubric can be seen [here](https://review.udacity.com/#!/rubrics/571/view).
 
@@ -39,7 +40,7 @@ The goals of the Advanced Lane Finding project are as follows:
 
 ### Writeup / README
 
-#### 1. Provide a Writeup / README that includes all the rubric points, and how each point was addressed.  The writeup may be submitted as a markdown (MD) or PDF file.   This submission is a markdown file.
+#### Provide a Writeup / README that includes all the rubric points, and how each point was addressed.  The writeup may be submitted as a markdown (MD) or PDF file.   This submission is a markdown file.
 
 [//]: # ([Here] https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md is a template writeup for this project you can use as a guide and a starting point.)
 
@@ -47,7 +48,7 @@ The goals of the Advanced Lane Finding project are as follows:
 
 ### Camera Calibration
 
-#### 1. State how the camera matrix and distortion coefficients are computed.  Provide an example of a distortion corrected calibration image.
+#### State how the camera matrix and distortion coefficients are computed.  Provide an example of a distortion corrected calibration image.
 
 [//]: # (You need to update this with your own description and image file)
 
@@ -68,7 +69,7 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
 ![alt text][image2]
 
-#### 2. Discuss ow color transforms, gradients, or other methods to create a thresholded binary image were used.  Identify where this was used in the source code.  Provide an example of a binary image result.
+#### 2. Discuss how color transforms, gradients, or other methods to create a thresholded binary image were used.  Identify where this was used in the source code.  Provide an example of a binary image result.
 
 [//]: # (You need to update this with your own description and image file)
 
@@ -116,7 +117,7 @@ Then I did some other stuff and fit my lane lines with a 2nd order polynomial ki
 
 ![alt text][image5]
 
-#### 5. Discuss howthe radius of curvature of the lane and the position of the vehicle with respect to center were calculated.  Identify where this was used in the source code.
+#### 5. Discuss how the radius of curvature of the lane and the position of the vehicle with respect to center were calculated.  Identify where this was used in the source code.
 
 [//]: # (You need to update this with your own description and image file)
 
@@ -134,7 +135,7 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 ### Video Pipeline
 
-#### 1. Provide a link to the final video output.  The pipeline should perform reasonably well on the entire project video.  In other words, wobbly lines are acceptable, but catastrophic failures that would cause the car to drive off the road are not!.
+#### Provide a link to the final video output.  The pipeline should perform reasonably well on the entire project video.  In other words, wobbly lines are acceptable, but catastrophic failures that would cause the car to drive off the road are not!.
 
 [//]: # (You need to update this with your own description and image file)
 
