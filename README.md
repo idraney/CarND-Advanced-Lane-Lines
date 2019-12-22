@@ -34,13 +34,13 @@ The goals of the Advanced Lane Finding project are as follows:
 ## Rubric Points
 [//]: # (## [Rubric Points] https://review.udacity.com/#!/rubrics/571/view )
 
-#### The rubric points of the Advanced Lane Finding project were considered individually.  Each point of the rubric is addressed in this implementation.  The original project rubric can be seen [here](https://review.udacity.com/#!/rubrics/571/view).
+The rubric points of the Advanced Lane Finding project were considered individually.  Each point of the rubric is addressed in this implementation.  The original project rubric can be seen [here](https://review.udacity.com/#!/rubrics/571/view).
 
 ---
 
-### Writeup / README
+[//]: # ### Writeup / README
 
-#### Provide a Writeup / README that includes all the rubric points, and how each point was addressed.  The writeup may be submitted as a markdown (MD) or PDF file.   This submission is a markdown file.
+[//]: # #### Provide a Writeup / README that includes all the rubric points, and how each point was addressed.  The writeup may be submitted as a markdown (MD) or PDF file.   This submission is a markdown file.
 
 [//]: # ([Here] https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md is a template writeup for this project you can use as a guide and a starting point.)
 
