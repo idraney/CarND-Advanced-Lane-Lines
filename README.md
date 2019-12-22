@@ -22,8 +22,8 @@ The goals of the Advanced Lane Finding project are as follows:
 [//]: # (Image References)
 
 [image1_1]: ./output_images/calibration2_corners_plot.png "Finding Corners"
-[image1_2]: ./output_images/calibration2_undistortion_plot.png "Applied Undistortion"
-[image1_3]: ./output_images/calibration1_undistortion_plot.png "Applied Undistortion"
+[image1_2]: ./output_images/calibration2_undistorted_plot.png "Applied Undistortion"
+[image1_3]: ./output_images/calibration1_undistorted_plot.png "Applied Undistortion"
 
 [image1]: ./output_images/calibration1_undistorted_plot.png "Undistorted"
 
@@ -67,28 +67,18 @@ To begin, the image "object points", or (x, y, z) coordinates of the chessboard 
 
 #### Undistort the chessboard images using the camera matrix and distortion coefficients.
 
-Using the detected corners from the previous section, the function `cal_undistort()` was created to undistort the images.  The calibration step was achieved by calling the `cv2.calibrateCamera()` function, which takes the `imgpoints` and `objpoints` arrays, as well as the image size, and returns the camera matrix, distortion coefficients, rotation vectors, and translation vectors.  Thie image, the camera matrix, and distortion coefficients are then sent to `cv2.undistort()`, which returns the undistorted image.
+Using the detected corners from the previous section, the function `cal_undistort()` was created to undistort the images.  The calibration step was achieved by calling the `cv2.calibrateCamera()` function, which takes the `imgpoints` and `objpoints` arrays, as well as the image size, and returns the camera matrix, distortion coefficients, rotation vectors, and translation vectors.  The image, the camera matrix, and distortion coefficients are then sent to `cv2.undistort()`, which returns the undistorted image.
 
 ![alt text][image1_1]
 
-Test Text
 ![alt text][image1_2]
 
-In the example images below, the original image was not included in the camera calibration step because the full view of its 9 x 6 corners are not shown.  Hence, the image was not included in the calculation of the distortion coefficients.  However, applying the the distortion coefficients that were calculated from the images with the complete corner set in view results in an undistorted image.
+In the example images below, the original image was not included in the camera calibration step because the full view of its 9 x 6 corners are not shown.  Hence, the image was not included as input for the `imgpoints` and `objpoints` arrays.  However, applying the `imgpoints` and `objpoints` arrays that were built from other images resulted in distortion coefficients that could be calculated for this image using `cv2.calibrateCamera()`, which finally resulted in distortion correction with `cv2.undistort()`.
 
 ![alt text][image1_3]
 
 Output images appear in the [./output_images](./output_images) folder.
 
-
-
-### Camera Calibration
-
-#### State how the camera matrix and distortion coefficients are computed.  Provide an example of a distortion corrected calibration image.
-
-After the `for()` loop iterations were complete, the arrays `objpoints` and `imgpoints` were used to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  The distortion correction was applied to the test image using the `cv2.undistort()` function and obtained this result: 
-
-![alt text][image1]
 
 
 ### Pipeline - Single (Still) Images
