@@ -40,7 +40,7 @@ The rubric points of the Advanced Lane Finding project were considered individua
 
 [//]: # (### Writeup / README)
 
-[//]: # (#### Provide a Writeup / README that includes all the rubric points, and how each point was addressed.  The writeup may be submitted as a markdown (MD) or PDF file.   This submission is a markdown file.)
+[//]: # (#### Provide a Writeup / README that includes all the rubric points, and how each point was addressed.  The writeup may be submitted as a markdown MD or PDF file.   This submission is a markdown file.)
 
 [//]: # ([Here] https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md is a template writeup for this project you can use as a guide and a starting point.)
 
