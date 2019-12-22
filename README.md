@@ -21,12 +21,11 @@ The goals of the Advanced Lane Finding project are as follows:
 
 [//]: # (Image References)
 
+[image1_1]: ./output_images/calibration2_corners_plot.png "Finding Corners"
+[image1_2]: ./output_images/calibration2_undistortion_plot.png "Applied Undistortion"
+[image1_3]: ./output_images/calibration1_undistortion_plot.png "Applied Undistortion"
+
 [image1]: ./output_images/calibration1_undistorted_plot.png "Undistorted"
-[image1-1]: ./output_images/calibration2_corners_plot.png "Finding Corners"
-[image1-2]: ./output_images/calibration2_undistortion_plot.png "Applied Undistortion"
-
-[image1-3]: ./output_images/calibration1_undistortion_plot.png "Applied Undistortion"
-
 
 [image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
@@ -64,18 +63,18 @@ The code for this step is contained in the first code cell of the IPython notebo
 
 To begin, the image "object points", or (x, y, z) coordinates of the chessboard corners, were prepared.  It is assumed that the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, the variable `objp` is just a replicated array of coordinates, and `objpoints` are appended with a copy of it when all chessboard corners in the test images are detected successfully in `for()` loop iterations.  The array variable `imgpoints` is appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection in the same `for()` loop.  
 
-![alt text][image1-1]
-![alt text][image1-2]
-
-Output images appear in the [./output_images](./output_images) folder.
-
-### Image Undistortion
+### Camera calibration and Image Undistortion
 
 #### Undistort the chessboard images using the camera matrix and distortion coefficients.
 
+Using the detected corners from the previous section, the function `cal_undistort()` was created to undistort the images.  The calibration step was achieved by calling the `cv2.calibrateCamera()` function, which takes the `imgpoints` and `objpoints` arrays, as well as the image size, and returns the camera matrix, distortion coefficients, rotation vectors, and translation vectors.  Thie image, the camera matrix, and distortion coefficients are then sent to `cv2.undistort()`, which returns the undistorted image.
+
+![alt text][image1_1]
+![alt text][image1_2]
+
 In the example images below, the original image was not included in the camera calibration step because the full view of its 9 x 6 corners are not shown.  Hence, the image was not included in the calculation of the distortion coefficients.  However, applying the the distortion coefficients that were calculated from the images with the complete corner set in view results in an undistorted image.
 
-![alt text][image1-3]
+![alt text][image1_3]
 
 Output images appear in the [./output_images](./output_images) folder.
 
