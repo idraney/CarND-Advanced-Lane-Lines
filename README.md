@@ -32,7 +32,7 @@ The goals of the Advanced Lane Finding project are as follows:
 
 
 ## Rubric Points
-[//]: # (## [Rubric Points](https://review.udacity.com/#!/rubrics/571/view)
+[//]: # (## [Rubric Points] https://review.udacity.com/#!/rubrics/571/view )
 
 #### The rubric points of the Advanced Lane Finding project were considered individually.  Each point of the rubric is addressed in this implementation.  The original project rubric can be seen [here](https://review.udacity.com/#!/rubrics/571/view).
 
