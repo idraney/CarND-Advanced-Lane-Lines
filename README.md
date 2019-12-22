@@ -70,6 +70,8 @@ To begin, the image "object points", or (x, y, z) coordinates of the chessboard 
 Using the detected corners from the previous section, the function `cal_undistort()` was created to undistort the images.  The calibration step was achieved by calling the `cv2.calibrateCamera()` function, which takes the `imgpoints` and `objpoints` arrays, as well as the image size, and returns the camera matrix, distortion coefficients, rotation vectors, and translation vectors.  Thie image, the camera matrix, and distortion coefficients are then sent to `cv2.undistort()`, which returns the undistorted image.
 
 ![alt text][image1_1]
+
+Test Text
 ![alt text][image1_2]
 
 In the example images below, the original image was not included in the camera calibration step because the full view of its 9 x 6 corners are not shown.  Hence, the image was not included in the calculation of the distortion coefficients.  However, applying the the distortion coefficients that were calculated from the images with the complete corner set in view results in an undistorted image.
