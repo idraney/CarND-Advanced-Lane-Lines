@@ -21,17 +21,22 @@ The goals of the Advanced Lane Finding project are as follows:
 
 [//]: # (Image References)
 
+[image1]: ./output_images/calibration1_undistorted_plot.png "Undistorted"
 [image1_1]: ./output_images/calibration2_corners_plot.png "Finding Corners"
 [image1_2]: ./output_images/calibration2_undistorted_plot.png "Applied Undistortion"
 [image1_3]: ./output_images/calibration1_undistorted_plot.png "Applied Undistortion"
 
-[image1]: ./output_images/calibration1_undistorted_plot.png "Undistorted"
+[image2]: ./test_images/test1.jpg "Original Road Image"
+[image2_1]: ./output_images/test1_undistorted.png "Road Image Undistorted"
 
-[image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
+
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
+
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
+
 [image6]: ./examples/example_output.jpg "Output"
+
 [video1]: ./project_video.mp4 "Video"
 
 
@@ -87,8 +92,13 @@ Output images appear in the [./output_images](./output_images) folder.
 
 #### 1. Provide an example of a distortion-corrected image.
 
-To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
+The `cv2.calibrateCamera()` and `cv2.undistort()` functions were applied to the road test images to apply distortion correction.  This was performed using the same `imgpoints` and `objpoints` arrays that were acquired during camera calibration.  It can be seen in the original test image that the white car is fully in view, while in the undistorted image, only part of the white car is visible (i.e., the right tail light of the white car cannot be seen).
+
+Original road test image:
 ![alt text][image2]
+
+Undistorted road image:
+![alt text][image2_1]
 
 #### 2. Discuss how color transforms, gradients, or other methods to create a thresholded binary image were used.  Identify where this was used in the source code.  Provide an example of a binary image result.
 
