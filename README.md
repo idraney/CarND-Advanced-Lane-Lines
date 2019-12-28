@@ -97,12 +97,14 @@ The `cv2.calibrateCamera()` and `cv2.undistort()` functions were applied to the 
 Original road test image:
 ![alt text][image2]
 
-Undistorted road image:
+Undistorted road test image:
 ![alt text][image2_1]
 
 #### 2. Discuss how color transforms, gradients, or other methods to create a thresholded binary image were used.  Identify where this was used in the source code.  Provide an example of a binary image result.
 
 [//]: # (You need to update this with your own description and image file)
+
+All images in the [./test_images](./test_images) folder were distortion-corrected, they separated into their individual R, G, B, H, S, and L channels for analysis.  The S, R, and B channels were selected to create a composite thresholded binary image since these channels could reveal the lane lines through individual channel binary thresholding (`channel_thresh()`), *x* and *y* Sobel operations (`abs_sobel_thresh()`), gradient magnitude (`mag_thresh()`), and gradient direction (`dir_threshold()`).  These operations on the S, R, and B channels with an additional binary threshold of each channel.  Finally, the resultant binary thresholds were combined through OR (`|`) operations to create a single threshold binary image to isolate lane lines.
 
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
 
