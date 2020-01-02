@@ -45,13 +45,13 @@ All output images can be found in the [./output_images/](./output_images/) folde
 [image1]: ./test_images/test1.jpg "Original Road Image"
 [image1_1]: ./output_images/test1_undistorted.png "Road Image Undistorted"
 
-[image2_1]: ./test5_undistorted_RGB_gray_plot.png "RGB image and grayscale image"
-[image2_2]: ./test5_undistorted_RGB_channels_plot.png "RGB channels"
-[image2_3]: ./test5_undistorted_HLS_channels_plot.png "HLS channels"
-[image2_4]: ./test5_undistorted_S_channel_threshold_plot.png "S channel thresholding"
-[image2_5]: ./test5_undistorted_R_channel_threshold_plot.png "R channel thresholding"
-[image2_6]: ./test5_undistorted_B_channel_threshold_plot.png "B channel thresholding"
-[image2_7]: ./test5_undistorted_stacked_combined_plot.png "Stacked and combined channels"
+[image2_1]: ./output_images/test5_undistorted_RGB_gray_plot.png "RGB image and grayscale image"
+[image2_2]: ./output_images/test5_undistorted_RGB_channels_plot.png "RGB channels"
+[image2_3]: ./output_images/test5_undistorted_HLS_channels_plot.png "HLS channels"
+[image2_4]: ./output_images/test5_undistorted_S_channel_threshold_plot.png "S channel thresholding"
+[image2_5]: ./output_images/test5_undistorted_R_channel_threshold_plot.png "R channel thresholding"
+[image2_6]: ./output_images/test5_undistorted_B_channel_threshold_plot.png "B channel thresholding"
+[image2_7]: ./output_images/test5_undistorted_stacked_combined_plot.png "Stacked and combined channels"
 
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
 
