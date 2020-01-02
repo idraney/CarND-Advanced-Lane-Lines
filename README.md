@@ -60,7 +60,7 @@ All output images can be found in the [./output_images/](./output_images/) folde
 [image4_2]: ./output_images/test3_undistorted_combined_transformed_polyfit_plot.png "Sliding window lane-line identification"
 [image4_3]: ./output_images/test3_undistorted_combined_transformed_polyfit_prev_plot.png "Previous polynomial lane-line identification"
 
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
+[image5_1]: ./output_images/test5_undistorted_combined_transformed_polyfit_prev_radcurve_plot.png "Previous polynomial lane-line identification after radius of curvature and distance from center calculations"
 
 [image6]: ./examples/example_output.jpg "Output"
 
@@ -227,7 +227,7 @@ In the sliding window method, a histogram of the lower half of the transformed t
 
 ##### Previously Calculated Polynomial Method
 
-In the previously calculated polynomial method, previously calculated polynomial coefficients are used to help calculate polynomial coefficients of a new image.  This is useful in video files since lane line locations do not vary drastically between two successive frames in the video.  Utilizing this method is also more efficient, since a histogram does not need to be created for each image or video frame being processed.  Like the sliding window method, the `find_lane_pixels()` function is called, taking in the binary thresholded image as input, and incorporates the histogram data, then returns the left and right line pixel positions as arrays (`leftx`, `lefty`, `rightx`, `righty`,), as well as the output image (`out_img`).  In this case, the output image is not used, but the lane line pixel positions are used to calculate new second order polynomial coefficients for the left and right lanes (`left_fit` and `right_fit`, respectively).  With these polynomial coefficients calculated, the `search_around_poly()` function is called which takes the binary thresholded image as input, as well as optional inputs to display a weighted image and the polynomial lines.  The `search_around_poly()` function grab activated pixels (i.e., nonzero or white pixels) from a selected margin (in the case of this progam, 20 pixels).  The area of search based on activated x-values within the margin of the polynomial function is set, then the left and right line pixel positions are extracted.  New polynomial coefficients are then calculated by calling the `fit_poly()` function.  Finally, the newly identified lane lines are drawn on the resulting image.  The final look of the output image that is returned also depends on the `weighted` and `plot_poly` inputs.
+In the previously calculated polynomial method, previously calculated polynomial coefficients are used to help calculate polynomial coefficients of a new image.  This is useful in video files since lane line locations do not vary drastically between two successive frames in the video.  Utilizing this method is also more efficient, since a histogram does not need to be created for each image or video frame being processed.  Like the sliding window method, the `find_lane_pixels()` function is called, taking in the binary thresholded image as input, and incorporates the histogram data, then returns the left and right line pixel positions as arrays (`leftx`, `lefty`, `rightx`, `righty`,), as well as the output image (`out_img`).  In this case, the output image is not used, but the lane line pixel positions are used to calculate new second order polynomial coefficients for the left and right lanes (`left_fit` and `right_fit`, respectively).  With these polynomial coefficients calculated, the `search_around_poly()` function is called which takes the binary thresholded image as input, as well as optional inputs to display a weighted image and the polynomial lines.  The `search_around_poly()` function grab activated pixels (i.e., nonzero or white pixels) from a selected margin (in the case of this progam, 20 pixels).  The area of search based on activated x-values within the margin of the polynomial function is set, then the left and right line pixel positions are extracted.  New polynomial coefficients are then calculated by calling the `fit_poly()` function.  Finally, the newly identified lane lines are drawn on the resulting image.  The final appearance of the output image that is returned also depends on the `weighted` and `plot_poly` inputs for the `search_around_poly()` function.
 
 ![alt text][image4_3]
 
@@ -239,7 +239,24 @@ All output images can be found in the [./output_images/](./output_images/) folde
 
 [//]: # (You need to update this with your own description and image file)
 
-I did this in lines # through # in my code in `my_other_file.py`
+The radius of curvature was calculated by sending the polynomial coefficents `left_fit` and `right_fit` to the function `measure_curvature_real()`.  The meters to pixels ratios were established in the y-dimention (`ym_per_pix = 30/720`) and x-dimension (`xm_per_pix = 3.7/700`).  The radius of curvature was finally calculated for each of the left and right lane-lines by the formula R = (1 + (2Ay + B)^2)^(3/2) / abs(2A), where A and B are the first and second polynomial coefficients, and y is the height of the image (720 pixels).
+
+The vehicle position with respect to the center of the lane was calculated by subtracting the midpoint of the image in the x-dimension `(img.shape[1] / 2)` from the midpoint of the first element in the left and right lane pixel arrays `(rightx[0] + leftx[0]) / 2)`.  In the case that this difference is negative, the vehicle has veered to the right of the center of the lane.  If the difference is (non-zero) positive, the vehicle has veered to the left of the lane.  In the case that the difference is zero, the vehicle is driving exactly in the center of the lane.
+
+The text below shows the reported radius of curvature and position of the vehicle with respect to the center of the lane, along with the corresponding image.  The source code and output from all test images can be found in the final cell of [./P2_01_05_Radius_of_Curvature_Position.ipynb](./P2_01_05_Radius_of_Curvature_Position.ipynb).
+
+
+```python
+./output_images/test5_undistorted_combined_transformed.png
+    Radius of Curvature:    Left = 1303.504 meters,	   Right = 1438.581 meters
+    Vehicle is 0.108 meters left of center
+```
+
+![alt text][image5_1]
+
+All output images can be found in the [./output_images/](./output_images/) folder.
+
+
 
 #### 6. Provide an example image of the result plotted back down onto the road such that the lane area is identified clearly.
 
