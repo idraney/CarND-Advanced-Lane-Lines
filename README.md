@@ -19,7 +19,7 @@ The goals of the Advanced Lane Finding project are as follows:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-Please note that the complete pipeline for still images and videos is contained in the [./P2.ipynb](./P2.ipynb) IPython notebook file.  However, this single file, which demonstrates the pipeline for all images contained in the [./test_images](./test_images) folder, and outputs them to the [./output_images](./output_images) and [./output_videos](./output_folders) for still images and videos, respectively, is too large to display on GitHub.  The portions of the pipeline as outlined by the project rubric are separated into individual IPython notebooks that can be displayed on GitHub without the need to download to your local machine.  These IPython notebooks are as follows:
+Please note that the complete pipeline for still images and videos is contained in the [./P2.ipynb](./P2.ipynb) IPython notebook file.  However, this single file, which demonstrates the pipeline for all images contained in the [./test_images](./test_images) folder, and outputs them to the [./output_images](./output_images) and [./output_videos](./output_videos) for still images and videos, respectively, is too large to display on GitHub.  Of course, all of the still image and video results can be viewed directly from within the [./output_images](./output_images) and [./output_videos](./output_videos) folders, respectively.  The portions of the pipeline as outlined by the project rubric are separated into individual IPython notebooks that can be displayed on GitHub without the need to download to your local machine.  These IPython notebooks are as follows:
 
 * [./P2_00_01_Calibration_DistCoeffs.ipynb](./P2_00_01_Calibration_DistCoeffs.ipynb)
 * [./P2_01_01_Distortion_Correction.ipynb](./P2_01_01_Distortion_Correction.ipynb)
@@ -56,7 +56,9 @@ All output images can be found in the [./output_images/](./output_images/) folde
 [image3_1]: ./output_images/test2_transformed_plot.png "Perspective transform RGB image"
 [image3_2]: ./output_images/test2_undistorted_combined_transformed_plot.png "Perspective transform combined channels"
 
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
+[image4_1]: ./output_images/test3_undistorted_combined_transformed_histogram_plot.png "Histogram of transformed combined-channel binary thresholded image"
+[image4_2]: ./output_images/test3_undistorted_combined_transformed_polyfit_plot.png "Sliding window lane-line identification"
+[image4_3]: ./output_images/test3_undistorted_combined_transformed_polyfit_prev_plot.png "Previous polynomial lane-line identification"
 
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 
@@ -201,10 +203,12 @@ In a table format, the source and destination points are defined as:
 | 223,  720     | 300, 720      |
 | 597,  450     | 300,   0      |
 
-The images below show the results of the perspective transformation.  The first image shows a side by side plot of one of the test images in RGB format before and after the perspective transformation.  The second image shows a side-by-side plot of one of the test images with the applied thresholds of the combined S, R, and B channels before and after the perspective transformation.  In both cases, the region of interest (ROI) based on the source and destination points is drawn as a purple polygon.
+The images below show the results of the perspective transformation.  The first image shows a side-by-side plot of one of the test images in RGB format before and after the perspective transformation.  The second image shows a side-by-side plot of one of the test images with the applied thresholds of the combined S, R, and B channels before and after the perspective transformation.  In both cases, the region of interest (ROI) based on the source and destination points is drawn as a purple polygon.
 
 ![alt text][image3_1]
 ![alt text][image3_2]
+
+All output images can be found in the [./output_images/](./output_images/) folder.
 
 
 
@@ -212,9 +216,24 @@ The images below show the results of the perspective transformation.  The first 
 
 [//]: # (You need to update this with your own description and image file)
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+Lane-line pixels were identified using two different methods: 1) using a sliding window, and 2) using the previously calculated polynomial from image/video data.  In both methods of finding the lane lines, the resulting image of the combined thresholded binary and perspective transform processes was used.  Both methods are demonstrated in the final cells of [./P2_01_04_Lane_Line_Pixel_Identification.ipynb](.P2_01_04_Lane_Line_Pixel_Identification.ipynb).
 
-![alt text][image5]
+##### Sliding Window Method
+
+In the sliding window method, a histogram of the lower half of the transformed thresholded binary image was generated using the `hist()` function.  This was performed because the white pixels of theimage were shown to be lane lines after the thresholding and transformation processes.  The function `fit_polynomial()` was then called, which takes the transformed thresholded binary image (grayscale) as input.  The `fit_polynomial()` function then further calls the `find_lane_pixels()` function, which takes the binary thresholded image as input and incorporates the histogram data, then returns the left and right line pixel positions as arrays (`leftx`, `lefty`, `rightx`, `righty`,), as well as the output image (`out_img`) back to the `fit_polynomial()` function.  Finally, the `fit_polynomial()` function calculates and outputs the polynomial coefficients for the left and right lanes (`left_fit` and `right_fit`, respectively) and plots them.  The results of the polynomial curves are also displayed in the output image (`out_img`) that is returned by the `fit_polynomial()` function.  The image below shows the histogram and polynomial results of the sliding window method. 
+
+![alt text][image4_1]
+![alt text][image4_2]
+
+##### Previously Calculated Polynomial Method
+
+In the previously calculated polynomial method, previously calculated polynomial coefficients are used to help calculate polynomial coefficients of a new image.  This is useful in video files since lane line locations do not vary drastically between two successive frames in the video.  Utilizing this method is also more efficient, since a histogram does not need to be created for each image or video frame being processed.  Like the sliding window method, the `find_lane_pixels()` function is called, taking in the binary thresholded image as input, and incorporates the histogram data, then returns the left and right line pixel positions as arrays (`leftx`, `lefty`, `rightx`, `righty`,), as well as the output image (`out_img`).  In this case, the output image is not used, but the lane line pixel positions are used to calculate new second order polynomial coefficients for the left and right lanes (`left_fit` and `right_fit`, respectively).  With these polynomial coefficients calculated, the `search_around_poly()` function is called which takes the binary thresholded image as input, as well as optional inputs to display a weighted image and the polynomial lines.  The `search_around_poly()` function grab activated pixels (i.e., nonzero or white pixels) from a selected margin (in the case of this progam, 20 pixels).  The area of search based on activated x-values within the margin of the polynomial function is set, then the left and right line pixel positions are extracted.  New polynomial coefficients are then calculated by calling the `fit_poly()` function.  Finally, the newly identified lane lines are drawn on the resulting image.  The final look of the output image that is returned also depends on the `weighted` and `plot_poly` inputs.
+
+![alt text][image4_3]
+
+All output images can be found in the [./output_images/](./output_images/) folder.
+
+
 
 #### 5. Discuss how the radius of curvature of the lane and the position of the vehicle with respect to center were calculated.  Identify where this was used in the source code.
 
