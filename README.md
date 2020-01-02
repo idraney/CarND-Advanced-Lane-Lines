@@ -19,15 +19,39 @@ The goals of the Advanced Lane Finding project are as follows:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
+Please note that the complete pipeline for still images and videos is contained in the [./P2.ipynb](./P2.ipynb) IPython notebook file.  However, this single file, which demonstrates the pipeline for all images contained in the [./test_images](./test_images) folder, and outputs them to the [./output_images](./output_images) and [./output_videos](./output_folders) for still images and videos, respectively, is too large to display on GitHub.  The portions of the pipeline as outlined by the project rubric are separated into individual IPython notebooks that can be displayed on GitHub without the need to download to your local machine.  These IPython notebooks are as follows:
+
+* [./P2_00_01_Calibration_DistCoeffs.ipynb](./P2_00_01_Calibration_DistCoeffs.ipynb)
+* [./P2_01_01_Distortion_Correction.ipynb](./P2_01_01_Distortion_Correction.ipynb)
+* [./P2_01_02_Color_Spaces.ipynb](./P2_01_02_Color_Spaces.ipynb)
+* [./P2_01_02a_Thresholds.ipynb](./P2_01_02a_Thresholds.ipynb)
+* [./P2_01_03_Perspective_Transform.ipynb](./P2_01_03_Perspective_Transform.ipynb)
+* [./P2_01_04_Lane_Line_Pixel_Identification.ipynb](.P2_01_04_Lane_Line_Pixel_Identification.ipynb)
+* [./P2_01_05_Radius_of_Curvature_Position.ipynb](./P2_01_05_Radius_of_Curvature_Position.ipynb)
+* [./P2_01_06_Still_Image_Examples.ipynb](./P2_01_06_Still_Image_Examples.ipynb)
+* [./P2_02_01_Video_Pipeline.ipynb](./P2_02_01_Video_Pipeline.ipynb)
+
+All output videos can be found in the [./output_videos/](./output_videos/) folder.
+
+All output images can be found in the [./output_images/](./output_images/) folder.
+
 [//]: # (Image References)
 
-[image1]: ./output_images/calibration1_undistorted_plot.png "Undistorted"
-[image1_1]: ./output_images/calibration2_corners_plot.png "Finding Corners"
-[image1_2]: ./output_images/calibration2_undistorted_plot.png "Applied Undistortion"
-[image1_3]: ./output_images/calibration1_undistorted_plot.png "Applied Undistortion"
+[image0]: ./output_images/calibration1_undistorted_plot.png "Undistorted"
+[image0_1]: ./output_images/calibration2_corners_plot.png "Finding Corners"
+[image0_2]: ./output_images/calibration2_undistorted_plot.png "Applied Undistortion"
+[image0_3]: ./output_images/calibration1_undistorted_plot.png "Applied Undistortion"
 
-[image2]: ./test_images/test1.jpg "Original Road Image"
-[image2_1]: ./output_images/test1_undistorted.png "Road Image Undistorted"
+[image1]: ./test_images/test1.jpg "Original Road Image"
+[image1_1]: ./output_images/test1_undistorted.png "Road Image Undistorted"
+
+[image2_1]: ./test5_undistorted_RGB_gray_plot.png "RGB image and grayscale image"
+[image2_2]: ./test5_undistorted_RGB_channels_plot.png "RGB channels"
+[image2_3]: ./test5_undistorted_HLS_channels_plot.png "HLS channels"
+[image2_4]: ./test5_undistorted_S_channel_threshold_plot.png "S channel thresholding"
+[image2_5]: ./test5_undistorted_R_channel_threshold_plot.png "R channel thresholding"
+[image2_6]: ./test5_undistorted_B_channel_threshold_plot.png "B channel thresholding"
+[image2_7]: ./test5_undistorted_stacked_combined_plot.png "Stacked and combined channels"
 
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
 
@@ -64,9 +88,11 @@ The rubric points of the Advanced Lane Finding project were considered individua
 
 [//]: # (You need to update this with your own description and image file)
 
-The code for this step is contained in the first code cell of the IPython notebook located in [P2.ipynb](./P2.ipynb).
-
 To begin, the image "object points", or (x, y, z) coordinates of the chessboard corners, were prepared.  It is assumed that the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, the variable `objp` is just a replicated array of coordinates, and `objpoints` are appended with a copy of it when all chessboard corners in the test images are detected successfully in `for()` loop iterations.  The array variable `imgpoints` is appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection in the same `for()` loop.  
+
+The code for this step may be viewed in the IPython notebook [./P2_00_01_Calibration_DistCoeffs.ipynb](./P2_00_01_Calibration_DistCoeffs.ipynb) without downloading the full pipeline file [P2.ipynb](./P2.ipynb).
+
+
 
 ### Camera calibration and Image Undistortion
 
@@ -74,15 +100,17 @@ To begin, the image "object points", or (x, y, z) coordinates of the chessboard 
 
 Using the detected corners from the previous section, the function `cal_undistort()` was created to undistort the images.  The calibration step was achieved by calling the `cv2.calibrateCamera()` function, which takes the `imgpoints` and `objpoints` arrays, as well as the image size, and returns the camera matrix, distortion coefficients, rotation vectors, and translation vectors.  The image, the camera matrix, and distortion coefficients are then sent to `cv2.undistort()`, which returns the undistorted image.
 
-![alt text][image1_1]
+![alt text][image0_1]
 
-![alt text][image1_2]
+![alt text][image0_2]
 
 In the example images below, the original image was not included in the camera calibration step because the full view of its 9 x 6 corners are not shown.  Hence, the image was not included as input for the `imgpoints` and `objpoints` arrays.  However, applying the `imgpoints` and `objpoints` arrays that were built from other images resulted in distortion coefficients that could be calculated for this image using `cv2.calibrateCamera()`, which finally resulted in distortion correction with `cv2.undistort()`.
 
-![alt text][image1_3]
+![alt text][image0_3]
 
-Output images appear in the [./output_images](./output_images) folder.
+The code for this step may be viewed in the IPython notebook [./P2_00_01_Calibration_DistCoeffs.ipynb](./P2_00_01_Calibration_DistCoeffs.ipynb) without downloading the full pipeline file [P2.ipynb](./P2.ipynb).
+
+All output images can be found in the [./output_images/](./output_images/) folder.
 
 
 
@@ -95,20 +123,38 @@ Output images appear in the [./output_images](./output_images) folder.
 The `cv2.calibrateCamera()` and `cv2.undistort()` functions were applied to the road test images to apply distortion correction.  This was performed using the same `imgpoints` and `objpoints` arrays that were acquired during camera calibration.  It can be seen in the original test image that the white car is fully in view, while in the undistorted image, only part of the white car is visible (i.e., the right tail light of the white car cannot be seen).
 
 Original road test image:
-![alt text][image2]
+![alt text][image1]
 
 Undistorted road test image:
-![alt text][image2_1]
+![alt text][image1_1]
+
+The code for this step may be viewed in the IPython notebook [./P2_01_01_Distortion_Correction.ipynb](./P2_01_01_Distortion_Correction.ipynb) without downloading the full pipeline file [P2.ipynb](./P2.ipynb).
+
+
 
 #### 2. Discuss how color transforms, gradients, or other methods to create a thresholded binary image were used.  Identify where this was used in the source code.  Provide an example of a binary image result.
 
 [//]: # (You need to update this with your own description and image file)
 
-All images in the [./test_images](./test_images) folder were distortion-corrected, they separated into their individual R, G, B, H, S, and L channels for analysis.  The S, R, and B channels were selected to create a composite thresholded binary image since these channels could reveal the lane lines through individual channel binary thresholding (`channel_thresh()`), *x* and *y* Sobel operations (`abs_sobel_thresh()`), gradient magnitude (`mag_thresh()`), and gradient direction (`dir_threshold()`).  These operations on the S, R, and B channels with an additional binary threshold of each channel.  Finally, the resultant binary thresholds were combined through OR (`|`) operations to create a single threshold binary image to isolate lane lines.
+All images in the [./test_images](./test_images) folder were distortion-corrected, they separated into their individual R, G, B, H, L, and S channels for analysis.  The S, R, and B channels were selected to create a composite thresholded binary image since these channels could reveal the lane lines through individual channel binary thresholding (`channel_thresh()`), *x* and *y* Sobel operations (`abs_sobel_thresh()`), gradient magnitude (`mag_thresh()`), and gradient direction (`dir_threshold()`).  These operations on the S, R, and B channels with an additional binary threshold of each channel.  Finally, the resultant binary thresholds were combined through OR (`|`) operations to create a single threshold binary image to isolate lane lines.
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+Below shows an example of taking one of the test images, and separating its individual color space channels: gray, R, G, B, H, S, and L.  The binary thresholds, gradient thresholds, and magnitute gradient, and directional gradient of each of S, R, and B channels are then displayed, in which these thresholds are combined for each respective channel.  Finally, the individually thresholded S, R, and B channels are combined to produce a "filtered" binary image that will be used to identify lane lines after a perspective transformation.
 
 ![alt text][image3]
+
+![alt_text][image2_1]
+![alt_text][image2_2]
+![alt_text][image2_3]
+![alt_text][image2_4]
+![alt_text][image2_5]
+![alt_text][image2_6]
+![alt_text][image2_7]
+
+The code for this step may be viewed in the IPython notebooks [./P2_01_02_Color_Spaces.ipynb](./P2_01_02_Color_Spaces.ipynb) and [./P2_01_02a_Thresholds.ipynb](./P2_01_02a_Thresholds.ipynb) without downloading the full pipeline file [P2.ipynb](./P2.ipynb).
+
+All output images can be found in the [./output_images/](./output_images/) folder.
+
+
 
 #### 3. Discuss how the perspective transform was performed.  Identify where this was used in the source code.  Provide an example of a resulting transformed image.  
 
