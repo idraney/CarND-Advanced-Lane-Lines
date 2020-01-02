@@ -62,7 +62,7 @@ All output images can be found in the [./output_images/](./output_images/) folde
 
 [image5_1]: ./output_images/test5_undistorted_combined_transformed_polyfit_prev_radcurve_plot.png "Previous polynomial lane-line identification after radius of curvature and distance from center calculations"
 
-[image6]: ./examples/example_output.jpg "Output"
+[image6_1]: ./output_images/test5_final_output.png "Final Output"
 
 [video1]: ./project_video.mp4 "Video"
 
@@ -262,9 +262,22 @@ All output images can be found in the [./output_images/](./output_images/) folde
 
 [//]: # (You need to update this with your own description and image file)
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+In the final step of the image pipeline, the resulting image from the `search_around_poly()` function is transformed to overlay the lane lines in the original image.  This transformation was performed by using the `transform_image()` function, and reversing the source and destination points.  The new transformation points used are as follows:
 
-![alt text][image6]
+| Source        | Destination   | 
+|:-------------:|:-------------:| 
+| 980,   0      | 685,  450     | 
+| 980, 720      | 1099, 720     |
+| 300, 720      | 223,  720     |
+| 300,   0      | 597,  450     |
+
+The final output image used the `weighted_img()` function to overlay the transformed identified lane lines over the original image.  The radius of curvature and vehicle position with respect to center were overlaid on the image as `cv2.putText()` objects.  The final process of the still image pipeline can be seen in the final cell of [./P2_01_06_Still_Image_Examples.ipynb](./P2_01_06_Still_Image_Examples.ipynb).
+
+![alt text][image6_1]
+
+All output images can be found in the [./output_images/](./output_images/) folder.
+
+
 
 ---
 
