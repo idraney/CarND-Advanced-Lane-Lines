@@ -53,7 +53,8 @@ All output images can be found in the [./output_images/](./output_images/) folde
 [image2_6]: ./output_images/test5_undistorted_B_channel_threshold_plot.png "B channel thresholding"
 [image2_7]: ./output_images/test5_undistorted_stacked_combined_plot.png "Stacked and combined channels"
 
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
+[image3_1]: ./output_images/test2_transformed_plot.png "Perspective transform RGB image"
+[image3_2]: ./output_images/test2_undistorted_combined_transformed_plot.png "Perspective transform combined channels"
 
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 
@@ -140,8 +141,6 @@ All images in the [./test_images](./test_images) folder were distortion-correcte
 
 Below shows an example of taking one of the test images, and separating its individual color space channels: gray, R, G, B, H, S, and L.  The binary thresholds, gradient thresholds, and magnitute gradient, and directional gradient of each of S, R, and B channels are then displayed, in which these thresholds are combined for each respective channel.  Finally, the individually thresholded S, R, and B channels are combined to produce a "filtered" binary image that will be used to identify lane lines after a perspective transformation.
 
-![alt text][image3]
-
 ![alt_text][image2_1]
 ![alt_text][image2_2]
 ![alt_text][image2_3]
@@ -160,33 +159,54 @@ All output images can be found in the [./output_images/](./output_images/) folde
 
 [//]: # (You need to update this with your own description and image file)
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+The code for the perspective transform includes the function `transform_image()`, which appears in the last cell of the IPython notebook [./P2_01_03_Perspective_Transform.ipynb](./P2_01_03_Perspective_Transform.ipynb).  The `transform_image()` function takes as inputs an image (`img`) and the transformation points (`vertex_TR`, `vertex_BR`, `vertex_BL`, `vertex_TL`, `vertex_TR_xfm`, `vertex_BR_xfm`, `vertex_BL_xfm`, and `vertex_TL_xfm`), where the first four points are the source points, and the last four points (`_xfm`) are the destination points.  The source and destination points are the same for all images and videos in this project since they are all the same size (1280 pixels by 720 pixels).  These transformation points are coded within the `transform_image()` function as follows:
 
 ```python
+# Source coordinates
 src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
+    [[vertex_TR[0], vertex_TR[1]],
+     [vertex_BR[0], vertex_BR[1]],
+     [vertex_BL[0], vertex_BL[1]],
+     [vertex_TL[0], vertex_TL[1]]])
+
+# Destination coordinates
 dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
+    [[vertex_TR_xfm[0], vertex_TR_xfm[1]],
+     [vertex_BR_xfm[0], vertex_BR_xfm[1]],
+     [vertex_BL_xfm[0], vertex_BL_xfm[1]],
+     [vertex_TL_xfm[0], vertex_TL_xfm[1]]])
 ```
 
-This resulted in the following source and destination points:
+Where the pixel locations of each of the transformation points are defined outside of the function:
+
+```python
+# Create ROI vertices, starting from Top Right (TR), clockwise 
+vertex_TR = (685,  450)
+vertex_BR = (1099, 720)
+vertex_BL = (223,  720)
+vertex_TL = (597,  450)
+
+# Create transformed vertices, starting from Top Right (TR), clockwise 
+vertex_TR_xfm = (980, 0)
+vertex_BR_xfm = (980, 720)
+vertex_BL_xfm = (300, 720)
+vertex_TL_xfm = (300, 0)
+```
+In a table format, the source and destination points are defined as:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| 685,  450     | 980,   0      | 
+| 1099, 720     | 980, 720      |
+| 223,  720     | 300, 720      |
+| 597,  450     | 300,   0      |
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
+The images below show the results of the perspective transformation.  The first image shows a side by side plot of one of the test images in RGB format before and after the perspective transformation.  The second image shows a side-by-side plot of one of the test images with the applied thresholds of the combined S, R, and B channels before and after the perspective transformation.  In both cases, the region of interest (ROI) based on the source and destination points is drawn as a purple polygon.
 
-![alt text][image4]
+![alt text][image3_1]
+![alt text][image3_2]
+
+
 
 #### 4. Discuss how lane-line pixels were identified, and how their positions were fit with a polynomial.  Identify where this was used in the source code.
 
