@@ -309,6 +309,8 @@ The video for the project with the identified lane-lines can be found at [./outp
 
 All output videos can be found in the [./output_videos/](./output_videos/) folder.
 
+If the video files are too large to be displayed in the browser from GitHub, please download them to your local computer.
+
 
 
 ---
