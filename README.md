@@ -287,7 +287,29 @@ All output images can be found in the [./output_images/](./output_images/) folde
 
 [//]: # (You need to update this with your own description and image file)
 
-Here's a [link to my video result](./project_video.mp4)
+The video pipeline is a condensed version that includes all of the steps mentioned above for the still image pipeline, with two major exceptions: 1) the omission of the sliding window method of lane-line identification, and 2) the inclusion of a class that is instantiated to save lane pixel information.
+
+The `Lane_Data` class was necessary to save variables to calculate the polynomial coefficients to identify the lane lines using the previously calculated polynomial method.  Without this, videos produced unexpected results when attempting to find lane-lines.  Below is the source code showing how the class was defined.
+
+```python
+# Define class to save data
+class Lane_Data:
+    leftx = []
+    lefty = []
+    rightx = []
+    righty = []
+    out_img = []
+    left_fit = []
+    right_fit = []
+```
+
+In any cell that uses the video pipeline, the class is instantiated prior to processing the video file (e.g., `LD = Lane_Data()`).  The source code of the video pipeline, and the processing of all of the videos included in this project, can be found in [./P2_02_01_Video_Pipeline.ipynb](./P2_02_01_Video_Pipeline.ipynb).
+
+The video for the project with the identified lane-lines can be found at [./output_videos/project_video.mp4](./output_videos/project_video.mp4)
+
+All output videos can be found in the [./output_videos/](./output_videos/) folder.
+
+
 
 ---
 
@@ -297,6 +319,7 @@ Here's a [link to my video result](./project_video.mp4)
 
 [//]: # (Where will your pipeline likely fail?  What could you do to make it more robust?)
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+The common approach for all images and video frames was to use the same thresholding methods (threshold binary, threshold gradients, magnitude gradients, and directional gradients combinations) for each of the S, R, and B channels.  While this was effective for the [project_video](./output_videos/project_video.mp4) with a couple minor glitches observed during playback, it did not produce consistent results for the challenge videos, as can be seen in the [./output_videos/](./output_videos/) folder.  The challenge videos show lane line "identification" that could be catastrophic if deployed in a real self-driving car.  
 
-I like pizza.
+Performing the same threshold processing methods on each of the S, R, and B channels resulted in "overprocessing," in that too much noise was introduced into the images.  In scenarios where the lane lines were the most distinct features on the road, this did not cause issues.  In scenarios where other lines and edges were more pronounced than the marked lane lines in the image, the lane finding algorithm failed due to the amount of noise in the binary image.  In fact, less processing of the R and B channels (e.g., simply using only the binary threshold of the R and B channels) would produce cleaner combined images, and lane-line identification less likely to fail.  In addition to the analysis of RGB and HSL color spaces that were explored in this project, more time could be spent exploring additional color spaces (e.g., LAB, HSV, YCrCb) and channel thresholding and combination methods to produce cleaner filters for lane-lines in the road in an effort to eliminate noise that contributes to false-positives, and hence errors resulting in the polynomial fit calculation.  This would be worthwhile future work to create a more effective method of correctly identifying lane lines in all road conditions.
+
